@@ -3,6 +3,9 @@ import cv2 as cv
 import numpy as np
 from os import listdir
 from os.path import isfile, join
+import datetime as pydatetime
+
+print('start: ', pydatetime.datetime.now())
 
 filelist = [f for f in listdir('.') if isfile(join('.', f))]
 
@@ -28,7 +31,7 @@ max_file = ''
 
 for filename in filelist:
     if (filename != base_filename and (filename.endswith('.png') or filename.endswith('.jpg'))):
-        print(filename)
+        # print(filename)
         hsv_target = cv.cvtColor(cv.imread(filename), cv.COLOR_BGR2HSV)
         hist_target = cv.calcHist([hsv_target], channels, None, histSize, ranges, accumulate=False)
         cv.normalize(hsv_target, hsv_target, alpha=0, beta=1, norm_type=cv.NORM_MINMAX)
@@ -47,3 +50,5 @@ for filename in filelist:
         # print('file : ', filename, ', diff : ', diff)
 
 print('max_diff : ', max_diff, '(', max_file, ')')
+
+print('finish: ', pydatetime.datetime.now())
